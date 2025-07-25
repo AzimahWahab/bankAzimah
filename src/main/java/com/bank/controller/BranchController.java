@@ -1,16 +1,24 @@
 package com.bank.controller;
 
-import com.bank.model.BranchDTO;
-import com.bank.service.IBranchService;
-import com.bank.mapper.BranchMapper;
-
-import lombok.AllArgsConstructor;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bank.mapper.BranchMapper;
+import com.bank.model.BranchDTO;
+import com.bank.service.IBranchService;
+import com.bank.validation.BranchValidation;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
@@ -39,9 +47,7 @@ public class BranchController {
     // Create new branch with validation
     @PostMapping
     public ResponseEntity<BranchDTO> createBranch(@RequestBody BranchDTO branchDTO) {
-        if (branchDTO.getBranchName() == null || branchDTO.getBranchName().trim().isEmpty()) {
-        throw new DemoAppException("Branch Name cannot be empty");
-        }
+        BranchValidation.validateBranchName(branchDTO.getBranchName());
 
         return ResponseEntity.ok(
             branchMapper.toDto(
@@ -61,7 +67,7 @@ public class BranchController {
     @GetMapping("/search")
     public ResponseEntity<List<BranchDTO>> searchByBranchName(@RequestParam String name) {
         return ResponseEntity.ok(
-        	branchMapper.toDtoList(branchService.searchByBranchName(name))
+            branchMapper.toDtoList(branchService.searchBranchByName(name))
         );
     }
 

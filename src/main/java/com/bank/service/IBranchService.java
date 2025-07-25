@@ -12,6 +12,7 @@ public interface IBranchService {
     List<BranchEntity> searchByBranchName(String name);
     List<BranchEntity> searchByDateRange(LocalDateTime from, LocalDateTime to);
 	List<BranchEntity> searchBranchByCreationDateBetween(LocalDateTime from, LocalDateTime to);
+	List<BranchEntity> searchBranchByName(String name);
 }
 
 

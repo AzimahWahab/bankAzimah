@@ -29,8 +29,8 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
-   // 	throw new DemoAppException("Demo exception testing");
-    	return null;
+    	var entities = productService.getAllProducts();
+    	return ResponseEntity.ok(productMapper.toDtoList(entities));
     }
 
     @GetMapping("/{id}")
