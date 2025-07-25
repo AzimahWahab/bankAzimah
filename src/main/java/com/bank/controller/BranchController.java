@@ -40,7 +40,7 @@ public class BranchController {
     @PostMapping
     public ResponseEntity<BranchDTO> createBranch(@RequestBody BranchDTO branchDTO) {
         if (branchDTO.getBranchName() == null || branchDTO.getBranchName().trim().isEmpty()) {
-        //    throw new DemoAppException("Branch Name cannot be empty");
+        throw new DemoAppException("Branch Name cannot be empty");
         }
 
         return ResponseEntity.ok(

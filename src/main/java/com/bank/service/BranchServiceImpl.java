@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.bank.controller.DemoAppException;
 import com.bank.entity.BranchEntity;
 import com.bank.repo.IBranchRepo;
 import com.bank.service.IBranchService;
@@ -21,10 +22,8 @@ public class BranchServiceImpl implements IBranchService {
     @Override
     public BranchEntity createBranch(BranchEntity branch) {
         if (branch.getBranchName() == null || branch.getBranchName().trim().isEmpty()) {
-           // throw new DemoAppException("Branch Name cannot be empty or contain only spaces");
-        	return null;
+           throw new DemoAppException("Branch Name cannot be empty or contain only spaces");
         }
-
         return branchRepo.save(branch);
     }
 
